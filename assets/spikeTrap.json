@@ -1,5 +1,5 @@
 { "frames": {
-   "spikeTrapCompleteFile 0.ase": {
+   "spikeTrap_0.ase": {
     "frame": { "x": 0, "y": 0, "w": 128, "h": 128 },
     "rotated": false,
     "trimmed": true,
@@ -7,7 +7,7 @@
     "sourceSize": { "w": 512, "h": 128 },
     "duration": 100
    },
-   "spikeTrapCompleteFile 1.ase": {
+   "spikeTrap_1.ase": {
     "frame": { "x": 128, "y": 0, "w": 192, "h": 128 },
     "rotated": false,
     "trimmed": true,
@@ -15,7 +15,7 @@
     "sourceSize": { "w": 512, "h": 128 },
     "duration": 100
    },
-   "spikeTrapCompleteFile 2.ase": {
+   "spikeTrap_2.ase": {
     "frame": { "x": 320, "y": 0, "w": 247, "h": 128 },
     "rotated": false,
     "trimmed": true,
@@ -23,7 +23,7 @@
     "sourceSize": { "w": 512, "h": 128 },
     "duration": 100
    },
-   "spikeTrapCompleteFile 3.ase": {
+   "spikeTrap_3.ase": {
     "frame": { "x": 567, "y": 0, "w": 307, "h": 128 },
     "rotated": false,
     "trimmed": true,
@@ -31,7 +31,7 @@
     "sourceSize": { "w": 512, "h": 128 },
     "duration": 100
    },
-   "spikeTrapCompleteFile 4.ase": {
+   "spikeTrap_4.ase": {
     "frame": { "x": 874, "y": 0, "w": 367, "h": 128 },
     "rotated": false,
     "trimmed": true,
@@ -39,7 +39,7 @@
     "sourceSize": { "w": 512, "h": 128 },
     "duration": 100
    },
-   "spikeTrapCompleteFile 5.ase": {
+   "spikeTrap_5.ase": {
     "frame": { "x": 1241, "y": 0, "w": 427, "h": 128 },
     "rotated": false,
     "trimmed": true,
@@ -47,7 +47,7 @@
     "sourceSize": { "w": 512, "h": 128 },
     "duration": 100
    },
-   "spikeTrapCompleteFile 6.ase": {
+   "spikeTrap_6.ase": {
     "frame": { "x": 1668, "y": 0, "w": 487, "h": 128 },
     "rotated": false,
     "trimmed": true,

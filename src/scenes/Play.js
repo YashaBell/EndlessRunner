@@ -41,12 +41,14 @@ class Play extends Phaser.Scene {
         this.anims.create({
             key: 'standAndUnfoldYourself',
             defaultTextureKey: 'spikeTrap',
-            frames: [
-                {frame: 'spikeTrap_01'},
-                {frame: 'spikeTrap_02'},
-                {frame: 'spikeTrap_03'}
-            ],
-                framerate: 1
+            frames:  this.anims.generateFrameNames('spikeTrap', {
+                prefix: 'spikeTrap_',
+                suffix: '.ase',
+                start: 0,
+                end: 6,
+                zeroPad: 0,
+        }),
+                framerate: 1,
         });
         
         //key binds
@@ -54,16 +56,22 @@ class Play extends Phaser.Scene {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-        this.Spike = new obj(this, -100, -100,'spike', 'spikeTrap');
+        this.spike = new obj(this, -100, -100, 'spikeTrap');
         this.P1 = new pBiker(this, game.config.width / 2, game.config.height - playerBuffer, 'playerBike');
         
+        this.physics.world.on('overlap',  (gameObject1, gameObject2, body1, body2) =>
+        {
+            gameObject1.breakDown = true;
+            //this.cameras.main.shake(50,2);
+        });
         }
     update(){
         //const pointer = this.input.activePointer;
         //pX = pointer.worldX;
         this.road.tilePositionY -= playerSpeed;
-        this.Spike.update();
+        this.spike.update();
         this.P1.update();
+        this.physics.world.overlap(this.P1, this.spike);
 
     }
-}   
+}
