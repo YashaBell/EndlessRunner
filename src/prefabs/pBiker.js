@@ -9,6 +9,7 @@ class pBiker extends Phaser.GameObjects.Sprite {
         this.breakDown = false;
         this.accel = 300;
         this.drag = 400;
+        this.add.tweens
     }
     update() {
         if(this.breakDown){
