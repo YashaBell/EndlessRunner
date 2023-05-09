@@ -61,6 +61,7 @@ class Play extends Phaser.Scene {
         
         this.physics.world.on('overlap',  (gameObject1, gameObject2, body1, body2) =>
         {
+            tweenHelper.flashElement(this, this.P1);
             gameObject1.breakDown = true;
             //this.cameras.main.shake(50,2);
         });
