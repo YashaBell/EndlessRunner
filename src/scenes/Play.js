@@ -11,9 +11,10 @@ class Play extends Phaser.Scene {
     }
     create(){
         //tile sprite
+        this.scene.run('gameUIScene');
         this.add.text('Play Scene');
-        this.road = this.add.tileSprite(0, 0,  720, 1280, 'road').setOrigin(0,0); 
-        this.road.scale = game.config.height / this.road.displayHeight;
+        this.road = this.add.tileSprite(UIBorderX, UIBorderY,  720, 1280, 'road').setOrigin(0,0); 
+        this.road.scale = (game.config.height - UIBorderY * 2)/ this.road.displayHeight;
         this.anims.create({
              key: 'left',
             defaultTextureKey: 'playerBike',
@@ -58,15 +59,31 @@ class Play extends Phaser.Scene {
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.spike = new obj(this, -100, -100, 'spikeTrap');
         this.P1 = new pBiker(this, game.config.width / 2, game.config.height - playerBuffer, 'playerBike');
-        
         this.physics.world.on('overlap',  (gameObject1, gameObject2, body1, body2) =>
         {
-            tweenHelper.flashElement(this, this.P1);
+            this.spike.disableBody(true,false);
             gameObject1.breakDown = true;
-            //this.cameras.main.shake(50,2);
+            this.cameras.main.shake(10,2);
+
+            this.blink = this.tweens.chain({
+                targets: gameObject1,
+                tweens: [
+                    {
+                        alpha:0,
+                        duration: 40
+                    },
+                    {
+                        alpha: 1,
+                        duration: 40
+                    },
+                ],
+                loop: 20,
+                onComplete: () => this.P1.breakDown = false
+            });
         });
         }
     update(){
+        console.log(this.P1.breakDown);
         //const pointer = this.input.activePointer;
         //pX = pointer.worldX;
         this.road.tilePositionY -= playerSpeed;

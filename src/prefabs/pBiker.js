@@ -9,7 +9,7 @@ class pBiker extends Phaser.GameObjects.Sprite {
         this.breakDown = false;
         this.accel = 300;
         this.drag = 400;
-        this.add.tweens
+        
     }
     update() {
         if(this.breakDown){
@@ -22,7 +22,7 @@ class pBiker extends Phaser.GameObjects.Sprite {
                 playerSpeed = 0;
                 this.body.velocityX = 0;
             }
-        } else{
+        }else{
             if(keyA.isDown && this.x >= this.width){
                 this.body.setAccelerationX(-this.accel)
                 this.anims.play('left');
