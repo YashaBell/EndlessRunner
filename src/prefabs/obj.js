@@ -11,9 +11,9 @@ class obj extends Phaser.Physics.Arcade.Sprite {
         this.inPlayerReset = false
     }
     update() {
-        if(!this.waitingForSpikes){
+        if(!this.waitingForSpikes && !this.playSpike){
             this.waitingForSpikes = true;
-            //this.clock = this.scene.time.delayedCall(Math.floor(Math.random() * 15000), () => {
+            this.clock = this.scene.time.delayedCall(Math.floor(Math.random() * 10000), () => {
                 this.playSpike = true;
                 this.y = UIBorderY;
                 this.alpha = 1;
@@ -27,7 +27,8 @@ class obj extends Phaser.Physics.Arcade.Sprite {
                     this.x = game.config.width - grassWidth;
                 }
                 this.anims.play('standAndUnfoldYourself');
-                    //}, null, this);
+            }, null, this);
+
         }
         if(this.playSpike){
             if(this.y > game.config.height && !this.inPlayerReset){
@@ -35,9 +36,9 @@ class obj extends Phaser.Physics.Arcade.Sprite {
                 this.disableBody(true, true);
                 this.flipX = false;
                 this.waitingForSpikes = false;
-                this.playSpike = true
+                this.playSpike = false;
             } else{
-                this.y += playerSpeed;
+                this.y += playerSpeed / 50;
             }
         }
     }

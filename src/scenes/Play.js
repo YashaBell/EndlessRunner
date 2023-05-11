@@ -14,7 +14,7 @@ class Play extends Phaser.Scene {
         //tile sprite
         this.scene.run('gameUIScene');
         this.add.text('Play Scene');
-        this.road = this.add.tileSprite(UIBorderX, UIBorderY,  720, 1280, 'road').setOrigin(0,0); 
+        this.road = this.add.tileSprite(UIBorderX, UIBorderY,  342, 608, 'road').setOrigin(0,0); 
         this.road.scale = (game.config.height - UIBorderY * 2)/ this.road.displayHeight;
         this .physics.world.setBounds(UIBorderX, UIBorderY, game.config.width - UIBorderX * 2, game.config.height - UIBorderY)
         this.gameOver = false;
@@ -40,36 +40,15 @@ class Play extends Phaser.Scene {
         
         this.spike = new obj(this, -100, -100, 'spikeTrap');
         this.P1 = new pBiker(this, game.config.width / 2, game.config.height - playerBuffer, 'playerBike');
-        this.AIBiker = new AI(this, game.config.width / 2, UIBorderY)
-        this.physics.world.on('overlap',  (gameObject1, gameObject2, body1, body2) =>
-        {
-            gameObject1.health --;
-            console.log(gameObject1.health);
-            if(gameObject1 instanceof pBiker){
-                sceneEvents.emit('playerOverlap', [gameObject2]);
-            }
-            this.spike.disableBody(true,false);
-            gameObject1.breakDown = true;
-            this.cameras.main.shake(10,2);
-            this.spike.inPlayerReset = true;
-            this.blink = this.tweens.chain({
-                targets: gameObject1,
-                tweens: [
-                    {
-                        alpha:0,
-                        duration: 40
-                    },
-                    {
-                        alpha: 1,
-                        duration: 40
-                    },
-                ],
-                loop: 15,
-                onComplete: () => {
-                    this.P1.breakDown = false;
-                    gameObject2.inPlayerReset = false;
-                }
-            });
+        this.AIBikers = this.add.group({classType: AI});
+        for(let i = 0; a)
+            //new AI(this, game.config.width / 2, UIBorderY, 'AIBike')
+
+        })
+        this.physics.world.on('overlap',  (gameObject1, gameObject2, body1, body2) =>{
+            if(gameObject1.texture.key == 'playerBike' && gameObject2.texture.key == 'spikeTrap'){
+                this.PlayerHitSpikes(gameObject1, gameObject2);
+            } 
         });
     }
     update(){
@@ -82,10 +61,47 @@ class Play extends Phaser.Scene {
         //const pointer = this.input.activePointer;
         //pX = pointer.worldX;
         if(!this.gameOver){
-            this.road.tilePositionY -= playerSpeed;
+            this.road.tilePositionY -= playerSpeed / 50;
             this.spike.update();
             this.P1.update();
             this.physics.world.overlap(this.P1, this.spike);
+            this.physics.world.collide(this.P1, this.AIBikers);
+            this.physics.world.overlap(this.AIBikers, this.spike);
         }
     }
+PlayerHitSpikes(gameObject1, gameObject2){
+    gameObject1.health --;
+    gameObject2.disableBody(true,false);
+    gameObject1.breakDown = true;
+    gameObject2.inPlayerReset = true;
+    this.cameras.main.shake(10,2);
+    sceneEvents.emit('playerUseRepair', gameObject1.health);
+    this.blink = this.tweens.chain({
+        targets: gameObject1,
+        tweens: [
+            {
+                alpha:0,
+                duration: 40
+            },
+            {
+                alpha: 1,
+                duration: 40
+            },
+        ],
+        loop: 15,
+        onComplete: () => {
+            this.P1.breakDown = false;
+            gameObject2.inPlayerReset = false;
+        }
+    });
+}            
 }
+/*
+this.AIBikers.createMultiple({
+            key: 'AIBike',
+            setXY: {
+                x: Math.floor(Math.random()*360-(UIBorderX + grassWidth))+UIBorderX + grassWidth,
+                y:UIBorderY
+            }
+           
+ */

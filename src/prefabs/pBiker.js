@@ -14,12 +14,8 @@ class pBiker extends Phaser.GameObjects.Sprite {
         this.scale = game.config.width / 720;
         this.health = 3;
     }
-    create() {
-        sceneEvents.on('playerUseRepair', overlaping=> {
-            if(overlaping.texture.key == 'spikeTrap')
-            sceneEvents.emit('playerUseRepair', this.health);
-            
-    });
+    create() {}
+    
     update() {
         if(this.breakDown){
             this.angle = 0;
@@ -29,14 +25,13 @@ class pBiker extends Phaser.GameObjects.Sprite {
                 this.body.velocity.x = this.body.velocity.x /1.5;
             }else{
                 playerSpeed = 0;
-                this.body.velocityX = 0;
+                this.body.velocity.x = 0;
             }
         }else{
             if(keyA.isDown && this.x >= this.width){
                 this.body.setAccelerationX(-this.accel)
                 this.angle = -15;
             } else if (keyD.isDown && this.x <= game.config.width - this.width) {
-                this.x += 3;
                 this.angle = 15;
                 this.body.setAccelerationX(this.accel);
             }else {
@@ -51,11 +46,11 @@ class pBiker extends Phaser.GameObjects.Sprite {
             }
 
             if(keyW.isDown && this.x >= this.width){
-                playerSpeed = 10;
+                playerSpeed = 200;
             }else if (keyS.isDown && this.x <= game.config.width - this.width) {
-                playerSpeed = 5;
+                playerSpeed = 50;
             }else {
-                playerSpeed = 7;
+                playerSpeed = 100;
             }
         }
     }

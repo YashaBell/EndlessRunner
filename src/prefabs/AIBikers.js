@@ -11,45 +11,21 @@ class AI extends Phaser.GameObjects.Sprite {
         this.accel = 300;
         this.drag = 400;
         this.scale = game.config.width / 720;
-        
+        //this.y += this.height/2;
     }
     update() {
         if(this.breakDown){
             this.angle = 0;
             this.body.setAccelerationX(0);
-            if(playerSpeed > 0){
-                playerSpeed -=0.1;
+            if(this.body.velocity.y> 0){
+                this.body.velocity.y -=0.1;
                 this.body.velocity.x = this.body.velocity.x /1.5;
             }else{
-                playerSpeed = 0;
-                this.body.velocityX = 0;
+                this.body.velocity.y = 0; 
+                this.body.velocity.x = 0;
             }
         }else{
-            if(keyA.isDown && this.x >= this.width){
-                this.body.setAccelerationX(-this.accel)
-                this.angle = -15;
-            } else if (keyD.isDown && this.x <= game.config.width - this.width) {
-                this.x += 3;
-                this.angle = 15;
-                this.body.setAccelerationX(this.accel);
-            }else {
-                this.body.setAccelerationX(0);
-                this.angle = 0;
-                if(this.body.velocityX < 0){
-                    this.body.setVelocityX(-this.accel);
-                }
-                if(this.body.velocityX > 0){
-                    this.body.setVelocityX(this.accel);
-                }
-            }
-
-            if(keyW.isDown && this.x >= this.width){
-                playerSpeed = 10;
-            }else if (keyS.isDown && this.x <= game.config.width - this.width) {
-                playerSpeed = 5;
-            }else {
-                playerSpeed = 7;
-            }
+            this.body.velocity.y = -(100 - playerSpeed);
         }
     }
 }
