@@ -7,7 +7,7 @@ class Menu extends Phaser.Scene {
        
     }
     create(){
-        this.add.text(game.config.width/2, game.config.height/2, 'Infinite Cycle');
+        this.add.text(game.config.width/2, game.config.height/2, 'Infinite Cycle', defaultTextConfig).setOrigin(.5,.5);
     }
     update() {
         const pointer = this.input.activePointer;

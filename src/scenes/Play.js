@@ -7,6 +7,7 @@ class Play extends Phaser.Scene {
         this.load.image('road', './assets/roadTile.png');
         this.load.image('playerBike', './assets/playerStraight.png');
         this.load.atlas('spikeTrap', './assets/spikeTrap.png', './assets/spikeTrap.json');
+        this.load.image('AIBike', './assets/aiBike.png');
         //this.load.atlas('debris', './assets/vertibirdBits.png', './assets/vertibirdBits.json')
     }
     create(){
@@ -16,6 +17,8 @@ class Play extends Phaser.Scene {
         this.road = this.add.tileSprite(UIBorderX, UIBorderY,  720, 1280, 'road').setOrigin(0,0); 
         this.road.scale = (game.config.height - UIBorderY * 2)/ this.road.displayHeight;
         this .physics.world.setBounds(UIBorderX, UIBorderY, game.config.width - UIBorderX * 2, game.config.height - UIBorderY)
+        this.gameOver = false;
+
         this.anims.create({
             key: 'standAndUnfoldYourself',
             defaultTextureKey: 'spikeTrap',
@@ -34,14 +37,17 @@ class Play extends Phaser.Scene {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-        this.
+        
         this.spike = new obj(this, -100, -100, 'spikeTrap');
         this.P1 = new pBiker(this, game.config.width / 2, game.config.height - playerBuffer, 'playerBike');
+        this.AIBiker = new AI(this, game.config.width / 2, UIBorderY)
         this.physics.world.on('overlap',  (gameObject1, gameObject2, body1, body2) =>
         {
             gameObject1.health --;
             console.log(gameObject1.health);
-            sceneEvents.emit('playerUseRepair', [gameObject1.health]);
+            if(gameObject1 instanceof pBiker){
+                sceneEvents.emit('playerOverlap', [gameObject2]);
+            }
             this.spike.disableBody(true,false);
             gameObject1.breakDown = true;
             this.cameras.main.shake(10,2);
@@ -65,14 +71,21 @@ class Play extends Phaser.Scene {
                 }
             });
         });
-        }
+    }
     update(){
+        if(this.P1.health == 0){
+            this.gameOver = true;
+            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', defaultTextConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart', defaultTextConfig).setOrigin(0.5);
+        }
+        
         //const pointer = this.input.activePointer;
         //pX = pointer.worldX;
-        this.road.tilePositionY -= playerSpeed;
-        this.spike.update();
-        this.P1.update();
-        this.physics.world.overlap(this.P1, this.spike);
-
+        if(!this.gameOver){
+            this.road.tilePositionY -= playerSpeed;
+            this.spike.update();
+            this.P1.update();
+            this.physics.world.overlap(this.P1, this.spike);
+        }
     }
 }

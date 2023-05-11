@@ -16,6 +16,19 @@ let UIBorderX = game.config.width/20;
 let UIBorderY = game.config.height/20;
 let grassWidth = 100 / (720 / game.config.width);
 const sceneEvents = new Phaser.Events.EventEmitter();
+let defaultTextConfig = {
+    fontFamily: 'Impact',
+    fontStyle: 'normal',
+    fontSize: '40px',
+    backgroundColor: '#000000',
+    color: '#71b09f',
+    align: 'center',
+    padding: {
+        top: 10,
+        bottom: 10
+    },
+    fixedWidth: 0
+}
 
 
 

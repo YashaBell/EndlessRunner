@@ -16,10 +16,7 @@ class GameUI extends Phaser.Scene {
         this.repairs = this.add.group({});
         const repairArray = this.repairs.getChildren();
         sceneEvents.on('playerUseRepair', health=> {
-            console.log(repairArray);
             const gear = Phaser.Utils.Array.RemoveAt(repairArray, health);
-            console.log(repairArray);
-            console.log(gear);
             if(gear){
                 gear.alpha = 0;
             }            

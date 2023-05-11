@@ -1,4 +1,4 @@
-class pBiker extends Phaser.GameObjects.Sprite {
+class AI extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame ) {
         super(scene, x, y, texture, frame)
         this.scene.add.existing(this);
@@ -10,16 +10,9 @@ class pBiker extends Phaser.GameObjects.Sprite {
         this.breakDown = false;
         this.accel = 300;
         this.drag = 400;
-        this.health = 3;
         this.scale = game.config.width / 720;
-        this.health = 3;
+        
     }
-    create() {
-        sceneEvents.on('playerUseRepair', overlaping=> {
-            if(overlaping.texture.key == 'spikeTrap')
-            sceneEvents.emit('playerUseRepair', this.health);
-            
-    });
     update() {
         if(this.breakDown){
             this.angle = 0;
