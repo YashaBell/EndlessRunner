@@ -4,16 +4,19 @@ class pBiker extends Phaser.GameObjects.Sprite {
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.body.onCollide = true;
-        this.body.setCollideWorldBounds(true)        
+        this.body.setCollideWorldBounds(true);
+        this.body.setSize(this.width / 4 , this.height);   
         this.body.onOverlap = true;
         this.breakDown = false;
         this.accel = 300;
         this.drag = 400;
-        
+        this.health = 3;
+        this.scale = game.config.width / 720;
+        this.health = 3;
     }
     update() {
         if(this.breakDown){
-            this.anims.play('straight');
+            this.angle = 0;
             this.body.setAccelerationX(0);
             if(playerSpeed > 0){
                 playerSpeed -=0.1;
@@ -25,14 +28,14 @@ class pBiker extends Phaser.GameObjects.Sprite {
         }else{
             if(keyA.isDown && this.x >= this.width){
                 this.body.setAccelerationX(-this.accel)
-                this.anims.play('left');
+                this.angle = -15;
             } else if (keyD.isDown && this.x <= game.config.width - this.width) {
                 this.x += 3;
-                this.anims.play('right');
+                this.angle = 15;
                 this.body.setAccelerationX(this.accel);
             }else {
                 this.body.setAccelerationX(0);
-                this.anims.play('straight');
+                this.angle = 0;
                 if(this.body.velocityX < 0){
                     this.body.setVelocityX(-this.accel);
                 }

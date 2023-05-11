@@ -12,19 +12,34 @@ class GameUI extends Phaser.Scene {
         this.add.rectangle(0, game.config.height - UIBorderY, game.config.width, UIBorderY, 0x000000).setOrigin(0,0);
         this.add.rectangle(0, 0, UIBorderX, game.config.height, 0x000000).setOrigin(0,0);
         this.add.rectangle(game.config.width - UIBorderX, 0, UIBorderX, game.config.height, 0x000000).setOrigin(0,0);
-        
-        const repairs = this.add.group({
-            classType: Phaser.GameObjects.image
+        this.health = game.config.health;
+        this.repairs = this.add.group({});
+        const repairArray = this.repairs.getChildren();
+        sceneEvents.on('playerUseRepair', health=> {
+            console.log(repairArray);
+            const gear = Phaser.Utils.Array.RemoveAt(repairArray, health);
+            console.log(repairArray);
+            console.log(gear);
+            if(gear){
+                gear.alpha = 0;
+            }            
         });
-
-        repairs.createMultiple({
+        this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
+            sceneEvents.off('playerUseRepair', health);
+        });
+        
+        this.repairs.createMultiple({
             key: 'bikeRepair',
             setXY: {
-                x: 32,
-                y: 32, 
-                stepX:64
+                x: UIBorderY / 2,
+                y: UIBorderY / 2, 
+                stepX: 32
             },
             setOrigin: (0,0),
+            setScale: {
+                x: game.config.width/720,
+                y: game.config.height/1280
+            },
             quantity: 3
         });
     }
