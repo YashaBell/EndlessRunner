@@ -5,7 +5,7 @@ class AI extends Phaser.GameObjects.Sprite {
         this.scene.physics.add.existing(this);
         this.body.onCollide = true;
         this.body.setCollideWorldBounds(false);
-        this.body.setSize(this.width / 3 , this.height);   
+        this.body.setSize(this.width / 2, this.height);   
         this.body.onOverlap = true;
         this.breakDown = false;
         this.accel = 100;
