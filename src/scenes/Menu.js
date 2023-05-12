@@ -2,10 +2,7 @@ class Menu extends Phaser.Scene {
     constructor() {
         super("menuScene");
     }
-    preload(){
-        //load audio
-       this.load.audio('selectSFX', './assets/audio/104550__diesel_freesound-cervelo-p2-changing-gears.wav');
-    }
+    preload(){}
     create(){
         this.add.text(game.config.width/2, game.config.height/6, 'The Tour of the Infinite', defaultTextConfig).setOrigin(.5,.5);
         defaultTextConfig.fontSize = '24px';

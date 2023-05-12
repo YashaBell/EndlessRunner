@@ -4,14 +4,14 @@ class Play extends Phaser.Scene {
     }
     preload() {
         //this.load.spritesheet('miniNukeF', './assets/miniNuke.png', {frameWidth: 20, frameHeight: 43, startFrame: 0, endFrame: 3});
-        this.load.image('road', './assets/roadTile.png');
-        this.load.image('playerBike', './assets/playerStraight.png');
-        this.load.atlas('spikeTrap', './assets/spikeTrap.png', './assets/spikeTrap.json');
-        this.load.atlas('warning', './assets/warning.png', './assets/warning.json');
-        this.load.atlas('AIBike', './assets/aiBike-sheet.png', './assets/aiBike.json');
-        this.load.audio('bikePetal', './assets/audio/mixkit-bike-pedalling-on-street-loop-1603.wav');
-        this.load.audio('tirePop', './assets/audio/samuelgremaud__puncture+johnsonbrandediting__tire-puncture-pop-hit.wav');
-        this.load.audio('cowBell', './assets/audio/cowBell.wav');
+        // this.load.image('road', './assets/roadTile.png');
+        // this.load.image('playerBike', './assets/playerStraight.png');
+        // this.load.atlas('spikeTrap', './assets/spikeTrap.png', './assets/spikeTrap.json');
+        // this.load.atlas('warning', './assets/warning.png', './assets/warning.json');
+        // this.load.atlas('AIBike', './assets/aiBike-sheet.png', './assets/aiBike.json');
+        // this.load.audio('bikePetal', './assets/audio/mixkit-bike-pedalling-on-street-loop-1603.wav');
+        // this.load.audio('tirePop', './assets/audio/samuelgremaud__puncture+johnsonbrandediting__tire-puncture-pop-hit.wav');
+        // this.load.audio('cowBell', './assets/audio/cowBell.wav');
     }
     create(){
         //audio set up based on paddleParkour
