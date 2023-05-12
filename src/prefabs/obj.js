@@ -13,23 +13,40 @@ class obj extends Phaser.Physics.Arcade.Sprite {
     update() {
         if(!this.waitingForSpikes && !this.playSpike){
             this.waitingForSpikes = true;
-            this.clock = this.scene.time.delayedCall(Math.floor(Math.random() * 10000), () => {
-                this.playSpike = true;
+            this.scene.time.delayedCall(Math.floor(Math.random() * 10000), () => {
                 this.y = UIBorderY;
-                this.alpha = 1;
                 this.enableBody(true, this.x, this.y, true, true);
+                randomTargetX = false;
                 if(Math.floor(Math.random() * 2) == 0){
+                    targetX = game.config.width / 2 + roadWidth / 2;
+                    this.scene.warning.x = game.config.width / 2 - roadWidth / 2;
+                    this.scene.warning.alpha = 1;
+                    this.scene.warning.anims.play('warningFlash');
+                this.scene.time.delayedCall(1000, () =>{
+                    this.alpha = 1;
+                    this.scene.warning.alpha = 0;
                     this.setOrigin(0,0);
                     this.x = grassWidth;
-                    targetX = game.config.width / 2 + roadWidth / 2;
+                    this.anims.play('standAndUnfoldYourself');
+                    this.enableBody(true, this.x, this.y, true, true);
+                    this.playSpike = true;
+                });
                 }else {
-                    this.flipX = true;
-                    this.setOrigin(1,0);
-                    this.x = game.config.width - grassWidth;
                     targetX = game.config.width / 2 - roadWidth / 2;
-
+                    this.scene.warning.x = game.config.width / 2 + roadWidth / 2;
+                    this.scene.warning.alpha = 1;
+                    this.scene.warning.anims.play('warningFlash');
+                    this.scene.time.delayedCall(1000, () => {
+                        this.alpha = 1;
+                        this.scene.warning.alpha = 0;
+                        this.flipX = true;
+                        this.setOrigin(1,0);
+                        this.x = game.config.width - grassWidth;
+                        this.enableBody(true, this.x, this.y, true, true);
+                        this.anims.play('standAndUnfoldYourself');
+                        this.playSpike = true;
+                    });
                 }
-                this.anims.play('standAndUnfoldYourself');
             }, null, this);
 
         }

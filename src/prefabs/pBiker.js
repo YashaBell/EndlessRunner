@@ -49,6 +49,8 @@ class pBiker extends Phaser.GameObjects.Sprite {
             }
 
             if(keyW.isDown && this.x >= this.width){
+                this.scene.warning.alpha = 1;
+                this.scene.warning.anims.play('warningFlash');
                 playerSpeed = 200;
             }else if (keyS.isDown && this.x <= game.config.width - this.width) {
                 playerSpeed = 75;

@@ -7,6 +7,7 @@ class Play extends Phaser.Scene {
         this.load.image('road', './assets/roadTile.png');
         this.load.image('playerBike', './assets/playerStraight.png');
         this.load.atlas('spikeTrap', './assets/spikeTrap.png', './assets/spikeTrap.json');
+        this.load.atlas('warning', './assets/warning.png', './assets/warning.json');
         this.load.image('AIBike', './assets/aiBike.png');
         this.load.audio('bikePetal', './assets/audio/mixkit-bike-pedalling-on-street-loop-1603.wav');
         this.load.audio('tirePop', './assets/audio/samuelgremaud__puncture+johnsonbrandediting__tire-puncture-pop-hit.wav');
@@ -69,7 +70,20 @@ class Play extends Phaser.Scene {
                 end: 6,
                 zeroPad: 0,
         }),
-                framerate: 1,
+                duration: 250,
+        });
+        this.anims.create({
+            key: 'warningFlash',
+            defaultTextureKey: 'warning',
+            frames:  this.anims.generateFrameNames('warning', {
+                prefix: 'warning',
+                suffix: '.png',
+                start: 0,
+                end: 2,
+                zeroPad: 0,
+            }),
+                loop: 4,
+                duration: 1000,
         });
         
         //key binds
@@ -93,7 +107,10 @@ class Play extends Phaser.Scene {
             
         }
         this.P1 = new pBiker(this, game.config.width / 2, game.config.height - playerBuffer, 'playerBike');
-
+        
+        this.warning = this.add.sprite(game.config.width / 2 - roadWidth / 2, UIBorderY, 'warning').setOrigin(0.5,0);
+        this.warning.alpha = 0;
+        
         this.physics.world.on('overlap',  (gameObject1, gameObject2, body1, body2) =>{
             if(gameObject1.texture.key == 'playerBike'){
                 this.PlayerOverlap(gameObject1);
@@ -106,7 +123,7 @@ class Play extends Phaser.Scene {
                 this.tirePop.play();
             }
         });
-    
+        
         this.scene.run('gameUIScene', {active: true});
     }
     update(){
