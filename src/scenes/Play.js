@@ -8,7 +8,7 @@ class Play extends Phaser.Scene {
         this.load.image('playerBike', './assets/playerStraight.png');
         this.load.atlas('spikeTrap', './assets/spikeTrap.png', './assets/spikeTrap.json');
         this.load.atlas('warning', './assets/warning.png', './assets/warning.json');
-        this.load.image('AIBike', './assets/aiBike.png');
+        this.load.atlas('AIBike', './assets/aiBike-sheet.png', './assets/aiBike.json');
         this.load.audio('bikePetal', './assets/audio/mixkit-bike-pedalling-on-street-loop-1603.wav');
         this.load.audio('tirePop', './assets/audio/samuelgremaud__puncture+johnsonbrandediting__tire-puncture-pop-hit.wav');
         this.load.audio('cowBell', './assets/audio/cowBell.wav');
@@ -93,6 +93,8 @@ class Play extends Phaser.Scene {
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         
         this.spike = new obj(this, -100, -100, 'spikeTrap');
+        this.AIFrames = ['white', 'lightBlue', 'red', 'green', 'pink', 'blue'];
+        console.log(this.AIFrames)
         this.AIBikers = this.add.group({
             classType: AI,
             runChildUpdate: true,
@@ -102,11 +104,13 @@ class Play extends Phaser.Scene {
         for(let i = 0;  i < 5; i++){
             this.AIBikers.add(new AI(this,
             (i/5) * ( 360 - (UIBorderX + grassWidth) * 2 )  + UIBorderX * 2 + grassWidth ,
-            UIBorderY, 'AIBike'
+            UIBorderY, 
+            'AIBike',
+            this.AIFrames[Math.floor(Math.random()*6)]
             ));
             
         }
-        this.P1 = new pBiker(this, game.config.width / 2, game.config.height - playerBuffer, 'playerBike');
+        this.P1 = new pBiker(this, game.config.width / 2, game.config.height - playerBuffer, 'playerBike').setDepth(1);
         
         this.warning = this.add.sprite(game.config.width / 2 - roadWidth / 2, UIBorderY, 'warning').setOrigin(0.5,0);
         this.warning.alpha = 0;
@@ -123,6 +127,7 @@ class Play extends Phaser.Scene {
                 this.tirePop.play();
             }
         });
+            
         
         this.scene.run('gameUIScene', {active: true});
     }
@@ -130,7 +135,9 @@ class Play extends Phaser.Scene {
         if(addAI){     
             this.AIBikers.add(new AI(this,
                 game.config.width / 2,
-                UIBorderY, 'AIBike'
+                UIBorderY, 
+                'AIBike',
+                this.AIFrames[Math.floor(Math.random()*6)]
             ));
             addAI = false;  
         } 

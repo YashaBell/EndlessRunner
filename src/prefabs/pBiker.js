@@ -8,7 +8,7 @@ class pBiker extends Phaser.GameObjects.Sprite {
         this.body.setSize(this.width / 4 , this.height);   
         this.body.onOverlap = true;
         this.breakDown = false;
-        this.accel = 300;
+        this.accel = 200;
         this.drag = 400;
         this.health = 3;
         this.scale = game.config.width / 720;
@@ -49,11 +49,9 @@ class pBiker extends Phaser.GameObjects.Sprite {
             }
 
             if(keyW.isDown && this.x >= this.width){
-                this.scene.warning.alpha = 1;
-                this.scene.warning.anims.play('warningFlash');
-                playerSpeed = 200;
+                playerSpeed = 125;
             }else if (keyS.isDown && this.x <= game.config.width - this.width) {
-                playerSpeed = 75;
+                playerSpeed = 90;
             }else {
                 playerSpeed = 100;
             }

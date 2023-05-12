@@ -18,6 +18,7 @@ class obj extends Phaser.Physics.Arcade.Sprite {
                 this.enableBody(true, this.x, this.y, true, true);
                 randomTargetX = false;
                 if(Math.floor(Math.random() * 2) == 0){
+                    randomTargetX = false;
                     targetX = game.config.width / 2 + roadWidth / 2;
                     this.scene.warning.x = game.config.width / 2 - roadWidth / 2;
                     this.scene.warning.alpha = 1;
