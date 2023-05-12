@@ -4,14 +4,15 @@ class AI extends Phaser.GameObjects.Sprite {
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.body.onCollide = true;
-        this.body.setCollideWorldBounds(true);
-        this.body.setSize(this.width / 4 , this.height);   
+        this.body.setCollideWorldBounds(false);
+        this.body.setSize(this.width / 3 , this.height);   
         this.body.onOverlap = true;
         this.breakDown = false;
         this.accel = 300;
         this.drag = 400;
         this.scale = game.config.width / 720;
-        //this.y += this.height/2;
+        this.newAccel = true;
+        this.currentPlayerSpeed = playerSpeed;
     }
     update() {
         if(this.breakDown){
@@ -25,7 +26,28 @@ class AI extends Phaser.GameObjects.Sprite {
                 this.body.velocity.x = 0;
             }
         }else{
-            this.body.velocity.y = -(100 - playerSpeed);
+            if(this.newAccel){
+                this.newAccel = false;
+                this.clock = this.scene.time.delayedCall(1000, () => {
+                    this.newAccel = true;
+                    this.body.setAccelerationY(Math.floor((0.5 - Math.random()) * 50));
+                });
+            }
+            if(this.currentPlayerSpeed != playerSpeed){
+                this.body.velocity.y -= this.currentPlayerSpeed - playerSpeed;
+                this.currentPlayerSpeed = playerSpeed;
+            }
+        }
+        if(this.y > game.config.height){
+            this.x = Math.floor(Math.random()*360-(UIBorderX + grassWidth)*2)+UIBorderX + grassWidth;
+            this.y = UIBorderY;
+            this.currentPlayerSpeed = playerSpeed;
+        }
+        if(this.y < 0){
+            this.x = Math.floor(Math.random()*360-(UIBorderX + grassWidth)*2)+UIBorderX + grassWidth;
+            this.y = game.config.height - UIBorderY
+            this.currentPlayerSpeed = playerSpeed;
+
         }
     }
 }

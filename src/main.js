@@ -11,7 +11,7 @@ let config = {
 let game = new Phaser.Game(config);
 let keyA, keyD, keyW, keyS;
 let playerBuffer = game.config.height/10;
-let playerSpeed = 3;
+let playerSpeed = 100;
 let UIBorderX = game.config.width/20;
 let UIBorderY = game.config.height/20;
 let grassWidth = 5/36 * (360-(UIBorderX *2));

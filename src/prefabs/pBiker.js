@@ -13,6 +13,7 @@ class pBiker extends Phaser.GameObjects.Sprite {
         this.health = 3;
         this.scale = game.config.width / 720;
         this.health = 3;
+        this.currentPlayerSpeed = playerSpeed;
     }
     create() {}
     
@@ -21,34 +22,33 @@ class pBiker extends Phaser.GameObjects.Sprite {
             this.angle = 0;
             this.body.setAccelerationX(0);
             if(playerSpeed > 0){
-                playerSpeed -=0.1;
-                this.body.velocity.x = this.body.velocity.x /1.5;
+                playerSpeed -= playerSpeed / 100;
+                this.body.velocity.x = this.body.velocity.x /2;
             }else{
                 playerSpeed = 0;
                 this.body.velocity.x = 0;
             }
         }else{
+            console.log(this.body.velocity.x);
+            this.angle = this.body.velocity.x/7;
             if(keyA.isDown && this.x >= this.width){
                 this.body.setAccelerationX(-this.accel)
-                this.angle = -15;
             } else if (keyD.isDown && this.x <= game.config.width - this.width) {
-                this.angle = 15;
                 this.body.setAccelerationX(this.accel);
             }else {
                 this.body.setAccelerationX(0);
-                this.angle = 0;
-                if(this.body.velocityX < 0){
-                    this.body.setVelocityX(-this.accel);
+                if(this.body.velocity.x < 0){
+                    this.body.setAccelerationX(this.accel);
                 }
-                if(this.body.velocityX > 0){
-                    this.body.setVelocityX(this.accel);
+                if(this.body.velocity.x > 0){
+                    this.body.setAccelerationX(-this.accel);
                 }
             }
 
             if(keyW.isDown && this.x >= this.width){
                 playerSpeed = 200;
             }else if (keyS.isDown && this.x <= game.config.width - this.width) {
-                playerSpeed = 50;
+                playerSpeed = 75;
             }else {
                 playerSpeed = 100;
             }
