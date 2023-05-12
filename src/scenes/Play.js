@@ -89,13 +89,13 @@ class Play extends Phaser.Scene {
         } 
         if(this.P1.health == 0){
             this.gameOver = true;
-            this.AIBikers.runChildUpdate = false;
-            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', defaultTextConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart', defaultTextConfig).setOrigin(0.5);
+            //this.AIBikers.runChildUpdate = false;
+            this.time.delayedCall(4000, () => { this.scene.stop('gameUIScene');this.scene.start('gameOverScene'); });
         }
         
         //const pointer = this.input.activePointer;
         //pX = pointer.worldX;
+        this.P1.update();
         if(!this.gameOver){
             this.road.tilePositionY -= playerSpeed / 50;
             this.spike.update();

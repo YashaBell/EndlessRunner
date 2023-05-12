@@ -21,8 +21,7 @@ class pBiker extends Phaser.GameObjects.Sprite {
         if(this.breakDown){
             this.angle = 0;
             this.body.setAccelerationX(0);
-            console.log(this.body.velocity.x)
-            if(playerSpeed > 0){
+                if(playerSpeed > 0){
                     playerSpeed -= Math.floor(playerSpeed / 40);
                 if(this.x <= UIBorderX + grassWidth + this.body.width){
                     this.body.velocity.x += 10;

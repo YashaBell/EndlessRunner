@@ -20,17 +20,17 @@ class GameUI extends Phaser.Scene {
         this.add.rectangle(game.config.width - UIBorderX, 0, UIBorderX, game.config.height, 0x000000).setOrigin(0,0);
         this.score = this.add.text(game.config.width  / 2, game.config.height - UIBorderY / 2,'Overtakes: 0', scoreConfig).setOrigin(0.5);
         
-        this.health = game.config.health;
         this.repairs = this.add.group({});
         const repairArray = this.repairs.getChildren();
         sceneEvents.on('playerUseRepair', health=> {
             const gear = Phaser.Utils.Array.RemoveAt(repairArray, health);
             if(gear){
                 gear.alpha = 0;
+                this.health --;
             }            
         });
         this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
-            sceneEvents.off('playerUseRepair', health);
+            sceneEvents.off('playerUseRepair');
         });
         
         this.repairs.createMultiple({
