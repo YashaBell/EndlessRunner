@@ -52,7 +52,6 @@ class Play extends Phaser.Scene {
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         
         this.spike = new obj(this, -100, -100, 'spikeTrap');
-        this.P1 = new pBiker(this, game.config.width / 2, game.config.height - playerBuffer, 'playerBike');
         this.AIBikers = this.add.group({
             classType: AI,
             runChildUpdate: true
@@ -65,14 +64,14 @@ class Play extends Phaser.Scene {
             ));
             
         }
+        this.P1 = new pBiker(this, game.config.width / 2, game.config.height - playerBuffer, 'playerBike');
+
         this.physics.world.on('overlap',  (gameObject1, gameObject2, body1, body2) =>{
             if(gameObject1.texture.key == 'playerBike'){
-                if(gameObject2.type != gameObject1.type){
-                    this.PlayerOffRoad(gameObject1);
-                } else {
-                    if(gameObject2.texture.key == 'spikeTrap'){
-                        this.PlayerHitSpikes(gameObject1, gameObject2);
-                    } 
+                this.PlayerOverlap(gameObject1);
+            }else {
+                if(gameObject1.texture.key == 'AIBike'){
+                    gameObject1.breakDown = true;
                 }
             }
         });
@@ -106,9 +105,9 @@ class Play extends Phaser.Scene {
             this.physics.world.overlap(this.AIBikers, this.grassR);
         }
     }
-    PlayerOffRoad(gameObject1, gameObject2){
+    PlayerOverlap(gameObject1, gameObject2){
 
-        this.physics.world.destroy(this.grassLOverlap);
+        gameObject1.body.onOverlap = false;
         gameObject1.health --;
         gameObject1.breakDown = true;
         gameObject1.offRoad = true;
@@ -128,12 +127,21 @@ class Play extends Phaser.Scene {
             ],
             loop: 15,
             onComplete: () => {
-                this.P1.breakDown = false;
+                gameObject1.breakDown = false;
+                gameObject1.body.onOverlap = true;
+                gameObject1.body.velocity.x = 0;
             }
         });
     } 
-
-    PlayerHitSpikes(gameObject1, gameObject2){
+}
+/*
+this.AIBikers.createMultiple({
+            key: 'AIBike',
+            setXY: {
+                x: Math.floor(Math.random()*360-(UIBorderX + grassWidth))+UIBorderX + grassWidth,
+                y:UIBorderY
+            }
+PlayerHitSpikes(gameObject1, gameObject2){
         gameObject1.health --;
         gameObject2.disableBody(true,false);
         gameObject1.breakDown = true;
@@ -158,14 +166,5 @@ class Play extends Phaser.Scene {
                 gameObject2.inPlayerReset = false;
             }
         });
-    }            
-}
-/*
-this.AIBikers.createMultiple({
-            key: 'AIBike',
-            setXY: {
-                x: Math.floor(Math.random()*360-(UIBorderX + grassWidth))+UIBorderX + grassWidth,
-                y:UIBorderY
-            }
-           
+    }         
  */

@@ -15,6 +15,8 @@ let playerSpeed = 100;
 let UIBorderX = game.config.width/20;
 let UIBorderY = game.config.height/20;
 let grassWidth = 5/36 * (360-(UIBorderX *2));
+let roadWidth = game.config.width - (grassWidth * 4 + UIBorderX * 2);
+let targetX = game.config.width / 2;
 const sceneEvents = new Phaser.Events.EventEmitter();
 let defaultTextConfig = {
     fontFamily: 'Impact',
