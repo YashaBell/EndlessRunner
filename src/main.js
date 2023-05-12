@@ -4,7 +4,7 @@ let config = {
     height: 640,
     fps:{target: 30,},
     scene: [ Menu , Play, GameUI, Credits, GameOver ],
-    physics: {default: 'arcade',arcade: {debug: true}},
+    physics: {default: 'arcade',arcade: {debug: false}},
     health: 3   
 };
 

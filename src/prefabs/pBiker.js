@@ -40,12 +40,12 @@ class pBiker extends Phaser.GameObjects.Sprite {
                 this.body.setAccelerationX(this.accel);
             }else {
                 this.body.setAccelerationX(0);
-                if(this.body.velocity.x < 0){
-                    this.body.setAccelerationX(this.accel);
-                }
-                if(this.body.velocity.x > 0){
-                    this.body.setAccelerationX(-this.accel);
-                }
+                // if(this.body.velocity.x < 0){
+                //     this.body.setAccelerationX(this.accel);
+                // }
+                // if(this.body.velocity.x > 0){
+                //     this.body.setAccelerationX(-this.accel);
+                // }
             }
 
             if(keyW.isDown && this.x >= this.width){
