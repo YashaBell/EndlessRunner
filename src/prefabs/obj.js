@@ -35,7 +35,7 @@ class obj extends Phaser.Physics.Arcade.Sprite {
         }
         if(this.playSpike){
             if(this.y > game.config.height && !this.inPlayerReset){
-                targetX = game.config.width / 2;
+                randomTargetX = true;
                 this.alpha = 0;
                 this.disableBody(true, true);
                 this.flipX = false;

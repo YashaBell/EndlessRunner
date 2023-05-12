@@ -13,6 +13,7 @@ class AI extends Phaser.GameObjects.Sprite {
         this.scale = game.config.width / 720;
         this.newAccel = true;
         this.currentPlayerSpeed = playerSpeed;
+        this.targetX = game.config.width / 2 + Math.floor((0.5 - Math.random()) * roadWidth)
     }
     update() {
         if(this.breakDown){
@@ -47,7 +48,10 @@ class AI extends Phaser.GameObjects.Sprite {
             this.body.velocity.y = 0;
             this.breakDown = false;
             this.currentPlayerSpeed = 0;
-            
+            raceScore ++;
+            if(raceScore % 5 == 0){
+                addAI = true;                
+            }
         }
         if(this.y < 0){
             this.x = game.config.width / 2;
@@ -55,6 +59,7 @@ class AI extends Phaser.GameObjects.Sprite {
             this.body.velocity.y = 0;
             this.breakDown = false;
             this.currentPlayerSpeed = 0;
+            raceScore --;
         }
     }
 }

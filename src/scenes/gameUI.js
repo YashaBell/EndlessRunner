@@ -8,10 +8,18 @@ class GameUI extends Phaser.Scene {
         this.load.image('bikeRepair', './assets/bikeRepair.png',);
     }
     create(){
+        let scoreConfig = defaultTextConfig;
+        scoreConfig.fontSize = `${UIBorderY}px`
+        scoreConfig.padding = {
+            top: -1,
+            bottom: 0
+        }
         this.add.rectangle(0, 0, game.config.width, UIBorderY, 0x000000).setOrigin(0,0);
         this.add.rectangle(0, game.config.height - UIBorderY, game.config.width, UIBorderY, 0x000000).setOrigin(0,0);
         this.add.rectangle(0, 0, UIBorderX, game.config.height, 0x000000).setOrigin(0,0);
         this.add.rectangle(game.config.width - UIBorderX, 0, UIBorderX, game.config.height, 0x000000).setOrigin(0,0);
+        this.score = this.add.text(game.config.width  / 2, game.config.height - UIBorderY / 2,'Overtakes: 0', scoreConfig).setOrigin(0.5);
+        
         this.health = game.config.health;
         this.repairs = this.add.group({});
         const repairArray = this.repairs.getChildren();
@@ -39,5 +47,8 @@ class GameUI extends Phaser.Scene {
             },
             quantity: 3
         });
+    }
+    update(){
+        this.score.text = `Overtakes: ${raceScore}`;
     }
 }

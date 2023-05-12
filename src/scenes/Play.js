@@ -54,7 +54,8 @@ class Play extends Phaser.Scene {
         this.spike = new obj(this, -100, -100, 'spikeTrap');
         this.AIBikers = this.add.group({
             classType: AI,
-            runChildUpdate: true
+            runChildUpdate: true,
+            maxsize: -1
         });
         this.totalAI = 5;
         for(let i = 0;  i < 5; i++){
@@ -76,12 +77,16 @@ class Play extends Phaser.Scene {
             }
         });
     
-        this.scene.run('gameUIScene');
+        this.scene.run('gameUIScene', {active: true});
     }
     update(){
-        if(this.AIBikers.getLength() < this.TotalAI){
-            this.AIBikers.add(new AI(this, Math.floor(Math.random()*360-(UIBorderX + grassWidth)*2)+UIBorderX + grassWidth, UIBorderY, 'AIBike'));
-        }
+        if(addAI){     
+            this.AIBikers.add(new AI(this,
+                game.config.width / 2,
+                UIBorderY, 'AIBike'
+            ));
+            addAI = false;  
+        } 
         if(this.P1.health == 0){
             this.gameOver = true;
             this.AIBikers.runChildUpdate = false;
