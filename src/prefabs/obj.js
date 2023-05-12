@@ -23,7 +23,7 @@ class obj extends Phaser.Physics.Arcade.Sprite {
                     this.scene.warning.x = game.config.width / 2 - roadWidth / 2;
                     this.scene.warning.alpha = 1;
                     this.scene.warning.anims.play('warningFlash');
-                this.scene.time.delayedCall(1000, () =>{
+                this.scene.time.delayedCall(500, () =>{
                     this.alpha = 1;
                     this.scene.warning.alpha = 0;
                     this.setOrigin(0,0);
@@ -37,7 +37,7 @@ class obj extends Phaser.Physics.Arcade.Sprite {
                     this.scene.warning.x = game.config.width / 2 + roadWidth / 2;
                     this.scene.warning.alpha = 1;
                     this.scene.warning.anims.play('warningFlash');
-                    this.scene.time.delayedCall(1000, () => {
+                    this.scene.time.delayedCall(500, () => {
                         this.alpha = 1;
                         this.scene.warning.alpha = 0;
                         this.flipX = true;

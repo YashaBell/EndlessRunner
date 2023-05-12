@@ -30,14 +30,12 @@ class Play extends Phaser.Scene {
             loop: false 
         });
     
-
         this.cowBell = this.sound.add('cowBell', { 
             mute: false,
             volume: 1,
             rate: 1,
             loop: false 
             });
-
 
         //tilesprite
         this.road = this.add.tileSprite(UIBorderX, UIBorderY,  342, 608, 'road').setOrigin(0,0); 
@@ -128,7 +126,6 @@ class Play extends Phaser.Scene {
             }
         });
             
-        
         this.scene.run('gameUIScene', {active: true});
     }
     update(){
