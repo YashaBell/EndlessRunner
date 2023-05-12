@@ -4,7 +4,7 @@ class Menu extends Phaser.Scene {
     }
     preload(){
         //load audio
-       
+       this.load.audio('selectSFX', './assets/audio/104550__diesel_freesound-cervelo-p2-changing-gears.wav');
     }
     create(){
         this.add.text(game.config.width/2, game.config.height/6, 'The Tour of the Infinite', defaultTextConfig).setOrigin(.5,.5);
@@ -21,11 +21,12 @@ class Menu extends Phaser.Scene {
     update() {
         const pointer = this.input.activePointer;
         if(keyW.isDown){
-
+            this.sound.play('selectSFX');
             this.scene.start('playScene');
         }
         if(keyS.isDown){
-            this.scene.start('creditsScene')
+            this.sound.play('selectSFX');
+            this.scene.start('creditsScene');
         }
     }
 }

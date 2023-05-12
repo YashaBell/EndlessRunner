@@ -12,7 +12,7 @@ class AI extends Phaser.GameObjects.Sprite {
         this.drag = 400;
         this.scale = game.config.width / 720;
         this.newAccel = true;
-        this.currentPlayerSpeed = playerSpeed;
+        this.randomAddVelocity = 0;
         this.targetX = game.config.width / 2 + Math.floor((0.5 - Math.random()) * roadWidth)
         this.scene = scene;
     }
@@ -31,10 +31,10 @@ class AI extends Phaser.GameObjects.Sprite {
                     this.newAccel = false;
                     this.clock = this.scene.time.delayedCall(1000, () => {
                         this.newAccel = true;
-                        this.body.setAccelerationY(Math.floor((0.5 - Math.random()) * 50));
+                        this.randomAddVelocity = Math.floor((0.5 - Math.random()) * 50);
                     });
                 }
-                this.body.velocity.y = playerSpeed - 100;
+                this.body.velocity.y = playerSpeed - 100 - this.randomAddVelocity;
 
                 //this.body.velocity.x = Math.floor(this.body.velocity.x);
                 this.angle = this.body.velocity.x/7;

@@ -20,6 +20,7 @@ class GameOver extends Phaser.Scene {
     }
     update() {
         if(keyS.isDown){
+            this.sound.play('selectSFX');
             this.scene.start('menuScene');
         }
     }

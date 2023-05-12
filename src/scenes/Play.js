@@ -8,10 +8,37 @@ class Play extends Phaser.Scene {
         this.load.image('playerBike', './assets/playerStraight.png');
         this.load.atlas('spikeTrap', './assets/spikeTrap.png', './assets/spikeTrap.json');
         this.load.image('AIBike', './assets/aiBike.png');
-        //this.load.atlas('debris', './assets/vertibirdBits.png', './assets/vertibirdBits.json')
+        this.load.audio('bikePetal', './assets/audio/mixkit-bike-pedalling-on-street-loop-1603.wav');
+        this.load.audio('tirePop', './assets/audio/samuelgremaud__puncture+johnsonbrandediting__tire-puncture-pop-hit.wav');
+        this.load.audio('cowBell', './assets/audio/cowBell.wav');
     }
     create(){
-        //tile sprite
+        //audio set up based on paddleParkour
+        this.bikeSFX = this.sound.add('bikePetal', { 
+            mute: false,
+            volume: 1,
+            rate: 1,
+            loop: true 
+            });
+            this.bikeSFX.play();
+
+        this.tirePop = this.sound.add('tirePop', { 
+            mute: false,
+            volume: 1,
+            rate: 1,
+            loop: false 
+        });
+    
+
+        this.cowBell = this.sound.add('cowBell', { 
+            mute: false,
+            volume: 1,
+            rate: 1,
+            loop: false 
+            });
+
+
+        //tilesprite
         this.road = this.add.tileSprite(UIBorderX, UIBorderY,  342, 608, 'road').setOrigin(0,0); 
         this.road.scale = (game.config.height - UIBorderY * 2)/ this.road.displayHeight;
         this .physics.world.setBounds(UIBorderX, UIBorderY, game.config.width - UIBorderX * 2, game.config.height - UIBorderY * 2);
@@ -75,6 +102,9 @@ class Play extends Phaser.Scene {
                     gameObject1.breakDown = true;
                 }
             }
+            if(gameObject2.type == gameObject1.type){
+                this.tirePop.play();
+            }
         });
     
         this.scene.run('gameUIScene', {active: true});
@@ -90,6 +120,12 @@ class Play extends Phaser.Scene {
         if(this.P1.health == 0){
             this.gameOver = true;
             //this.AIBikers.runChildUpdate = false;
+            this.tweens.add({
+                targets: this.bikeSFX,
+                volume: 0,
+                ease: 'Linear',
+                duration: 2000
+            });
             this.time.delayedCall(4000, () => { this.scene.stop('gameUIScene');this.scene.start('gameOverScene'); });
         }
         
